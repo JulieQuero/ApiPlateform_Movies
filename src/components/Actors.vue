@@ -12,6 +12,10 @@ defineProps({
     type: String,
     default: 'nationality'
   },
+  movies: {
+    type: Array,
+    default: 'nationality'
+  },
 
 })
 </script>
@@ -20,6 +24,12 @@ defineProps({
     <div class="actor card">
       <h2>{{ firstName }} {{ lastName }}</h2>
       <p>{{nationality}}</p>
+      <p>Movies :</p>
+      <ul>
+        <li v-for="movie in movies" :key="movie.id">
+          {{ movie.title }}
+        </li>
+      </ul>
     </div>
 </template>
 

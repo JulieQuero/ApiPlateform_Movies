@@ -17,7 +17,11 @@ onMounted(async () => {
   <div class="wrapper">
     <div class="categories">
       <div class="list">
-          <Categories v-for="category in categories" :key="category.id" :category="category.name" />
+          <Categories v-for="category in categories"
+                      :key="category.id"
+                      :category="category.name"
+                      :movies="category.movies"
+          />
       </div>
     </div>
   </div>
