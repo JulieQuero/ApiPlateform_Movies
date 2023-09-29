@@ -5,16 +5,26 @@ import Categories from "@/components/Categories.vue";
 
 let response = ref('')
 let categories = ref('')
+let ListComplete = ref('')
 onMounted(async () => {
   const response = await axios.get('http://localhost:8080/symfonyS5/public/index.php/api/categories');
   categories.value = response.data['hydra:member'];
+  ListComplete.value = response.data['hydra:member'];
 });
 
+var recherche = ref('')
+function filter(){
+  categories.value = ListComplete.value
+  categories.value = categories.value.filter(category => category.name.includes(recherche.value))
+}
 </script>
 
 <template>
   <h1>CategoriesPage</h1>
   <div class="wrapper">
+    <div class="search>">
+      <input v-model.trim="recherche" placeholder="Search category" @keyup="filter">
+    </div>
     <div class="categories">
       <div class="list">
           <Categories v-for="category in categories"
