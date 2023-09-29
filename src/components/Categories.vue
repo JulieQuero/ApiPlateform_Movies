@@ -3,7 +3,11 @@ defineProps({
   category: {
     type: String,
     default: 'Category'
-  }
+  },
+  movies: {
+    type: Array,
+    default: 'Movies'
+  },
 
 })
 </script>
@@ -11,6 +15,11 @@ defineProps({
 <template>
   <div class="category card">
     <h2>{{ category }}</h2>
+    <ul>
+      <li v-for="movie in movies" :key="movie.id">
+        {{ movie.title }}
+      </li>
+    </ul>
   </div>
 </template>
 
