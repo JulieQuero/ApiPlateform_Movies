@@ -5,16 +5,26 @@ import Movies from "@/components/Movies.vue";
 
 let response = ref('')
 let movies = ref('')
+let ListComplete = ref('')
 onMounted(async () => {
   const response = await axios.get('http://localhost:8080/symfonyS5/public/index.php/api/movies');
   movies.value = response.data['hydra:member'];
+  ListComplete.value = response.data['hydra:member'];
 });
 
+var recherche = ref('')
+function filter(){
+  movies.value = ListComplete.value
+  movies.value = movies.value.filter(movie => movie.title.includes(recherche.value))
+}
 </script>
 
 <template>
   <h1>MoviesPage</h1>
   <div class="wrapper">
+    <div class="search>">
+      <input v-model.trim="recherche" placeholder="Search movie" @keyup="filter">
+    </div>
     <div class="movies">
       <div class="list">
         <Movies v-for="movie in movies"
