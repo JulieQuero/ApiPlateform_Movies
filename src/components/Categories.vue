@@ -1,0 +1,26 @@
+<script setup>
+defineProps({
+  category: {
+    type: String,
+    default: 'Category'
+  }
+
+})
+</script>
+
+<template>
+  <div class="category card">
+    <h2>{{ category }}</h2>
+  </div>
+</template>
+
+<style scoped>
+.card {
+  width: 15%;
+  padding: 1rem;
+  margin: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+</style>
