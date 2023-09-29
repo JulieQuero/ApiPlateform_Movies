@@ -23,6 +23,7 @@ onMounted(async () => {
                 :firstName="actor.firstName"
                 :lastName="actor.lastName"
                 :nationality="actor.nationality.nationality"
+                :movies="actor.movies"
         />
       </div>
     </div>
