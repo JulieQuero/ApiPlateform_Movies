@@ -29,6 +29,7 @@ defineProps({
 
 <template>
     <div class="movie card">
+      <button>Edit</button>
       <h2>{{ title }}</h2>
       <p>Description : {{ description }}</p>
       <p>Release Date : {{ releaseDate }}</p>
