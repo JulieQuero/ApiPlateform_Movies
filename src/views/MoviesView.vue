@@ -45,6 +45,7 @@ function filter(){
       <div class="list">
         <Movies v-for="movie in movies"
                 :key="movie.id"
+                :id="movie.id"
                 :title="movie.title"
                 :description="movie.description"
                 :releaseDate="movie.releaseDate"

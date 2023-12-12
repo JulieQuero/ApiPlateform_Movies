@@ -31,6 +31,7 @@ function filter(){
       <div class="list">
         <Actors v-for="actor in actors"
                 :key="actor.id"
+                :id="actor.id"
                 :firstName="actor.firstName"
                 :lastName="actor.lastName"
                 :nationality="actor.nationality.nationality"
