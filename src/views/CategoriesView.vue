@@ -34,6 +34,7 @@ function filter(){
       <div class="list">
           <Categories v-for="category in categories"
                       :key="category.id"
+                      :id="category.id"
                       :category="category.name"
                       :movies="category.movies"
           />

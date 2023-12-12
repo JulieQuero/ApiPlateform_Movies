@@ -1,5 +1,8 @@
 <script setup>
 defineProps({
+  id: {
+    type: Number,
+  },
   firstName: {
     type: String,
     default: 'firstName'
@@ -22,6 +25,8 @@ defineProps({
 
 <template>
     <div class="actor card">
+      <button>Edit</button>
+      <routerLink :to="'/actor-detail/'+id">
       <h2>{{ firstName }} {{ lastName }}</h2>
       <p>{{nationality}}</p>
       <p>Movies :</p>
@@ -30,6 +35,7 @@ defineProps({
           {{ movie.title }}
         </li>
       </ul>
+      </routerLink>
     </div>
 </template>
 

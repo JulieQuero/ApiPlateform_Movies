@@ -14,9 +14,6 @@ if (token) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }
 
-if(!token){
-  location.href = '/login';
-}
 
 onMounted(async () => {
   const responseMovies = await axios.get(
@@ -28,7 +25,6 @@ onMounted(async () => {
         }
       }
   )
-  console.log(responseMovies)
   movies.value = responseMovies.data.reverse();
   movies.value = movies.value.slice(0,4);
   const responseActors = await axios.get(
@@ -54,6 +50,7 @@ onMounted(async () => {
       <div class="last-four">
         <Movies v-for="movie in movies"
                 :key="movie.id"
+                :id="movie.id"
                 :title="movie.title"
                 :description="movie.description"
                 :releaseDate="movie.releaseDate"
@@ -68,6 +65,7 @@ onMounted(async () => {
       <div class="last-four">
         <Actors v-for="actor in actors"
                 :key="actor.id"
+                :id="actor.id"
                 :firstName="actor.firstName"
                 :lastName="actor.lastName"
                 :nationality="actor.nationality.nationality"
