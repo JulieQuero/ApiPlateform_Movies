@@ -2,7 +2,7 @@
 import {onMounted, ref} from 'vue'
 import axios from 'axios'
 import Movies from "@/components/Movies.vue";
-import { useRouter } from 'vue-router';
+import {useRouter} from 'vue-router';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const router = useRouter();
@@ -23,17 +23,16 @@ const getMovies = async () => {
     const token = localStorage.getItem('user-token');
     if (!token) {
       // Rediriger l'utilisateur vers la page de connexion
-      router.push('/login/');
+      router.push('/login');
       return;
     }
-    const response = await axios.get(apiUrl +'/movies', {
+    const response = await axios.get(apiUrl + '/movies', {
       headers: {
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',
       },
     });
     movies.value = response.data;
-    console.log(response);
     ListComplete.value = response.data;
   } catch (error) {
     console.error('Error', error);
@@ -53,6 +52,7 @@ function filter() {
   movies.value = ListComplete.value
   movies.value = movies.value.filter(movie => movie.title.includes(recherche.value))
 }
+</script>
 
 <template>
   <h1>MoviesPage</h1>
@@ -75,22 +75,22 @@ function filter() {
       </div>
     </div>
   </div>
-<!--  <div :class="['col-md-3', { 'd-none': !selectedMovieId }]">
-    <h2 v-if="selectedMovie">{{ selectedMovie.title }}</h2>
-    <form @submit.prevent="updateMovieTitle">
-      <div class="form-group">
-        <label for="editMovieTitle">Titre du film :</label>
-        <input
-            type="text"
-            class="form-control"
-            id="editMovieTitle"
-            v-if="selectedMovie"
-            v-model="editedMovieTitle"
-        />
-      </div>
-      <button type="submit" class="btn btn-primary">Modifier</button>
-    </form>
-  </div>-->
+  <!--  <div :class="['col-md-3', { 'd-none': !selectedMovieId }]">
+      <h2 v-if="selectedMovie">{{ selectedMovie.title }}</h2>
+      <form @submit.prevent="updateMovieTitle">
+        <div class="form-group">
+          <label for="editMovieTitle">Titre du film :</label>
+          <input
+              type="text"
+              class="form-control"
+              id="editMovieTitle"
+              v-if="selectedMovie"
+              v-model="editedMovieTitle"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Modifier</button>
+      </form>
+    </div>-->
 </template>
 
 <style scoped>

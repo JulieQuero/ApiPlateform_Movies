@@ -25,7 +25,6 @@ defineProps({
 
 <template>
     <div class="actor card">
-      <button>Edit</button>
       <routerLink :to="'/actor-detail/'+id">
       <h2>{{ firstName }} {{ lastName }}</h2>
       <p>{{nationality}}</p>

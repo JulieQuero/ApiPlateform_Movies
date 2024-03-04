@@ -2,18 +2,47 @@
 import { onMounted, ref } from 'vue'
 import axios from 'axios'
 import Actors from "@/components/Actors.vue";
+import {useRouter} from "vue-router";
 
 const apiUrl = import.meta.env.VITE_API_URL;
+const router = useRouter();
 
 let response = ref('')
 let actors = ref('')
 let ListComplete = ref('')
 let data = ref('')
+
 onMounted(async () => {
-  const response = await axios.get(apiUrl +'/actors');
-  actors.value = response.data['hydra:member'];
-  ListComplete.value = response.data['hydra:member'];
+  getActors();
 });
+
+const getActors = async () => {
+  try {
+    const token = localStorage.getItem('user-token');
+    if (!token) {
+      // Rediriger l'utilisateur vers la page de connexion
+      router.push('/login');
+      return;
+    }
+    const response = await axios.get(apiUrl +'/actors', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+      },
+    });
+    actors.value = response.data;
+    ListComplete.value = response.data;
+  } catch (error) {
+    console.error('Error', error);
+    console.log(error.response?.data?.code);
+    if (error.response?.data?.code === 401) {
+      // Détruire le token
+      localStorage.removeItem('token');
+      // Rediriger l'utilisateur vers la page de connexion
+      router.push('/login');
+    }
+  }
+};
 
 var recherche = ref('')
 function filter(){

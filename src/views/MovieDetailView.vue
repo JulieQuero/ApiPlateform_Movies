@@ -65,17 +65,16 @@ const updateMovie = async () => {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/merge-patch+json',
       };
-      console.log(selectedMovie.value.description);
       const updatedMovie = {
-        title: editedMovieTitle.value? editedMovieTitle.value : selectedMovie.value.title,
-        description: editedMovieDescription.value? editedMovieDescription.value : selectedMovie.value.description,
-        releaseDate: editedMovieReleaseDate.value? editedMovieReleaseDate.value : selectedMovie.value.releaseDate,
-        duration: editedMovieDuration.value? editedMovieDuration.value : selectedMovie.value.duration,
+        title: editedMovieTitle.value ? editedMovieTitle.value : selectedMovie.value.title,
+        description: editedMovieDescription.value ? editedMovieDescription.value : selectedMovie.value.description,
+        releaseDate: editedMovieReleaseDate.value ? editedMovieReleaseDate.value : selectedMovie.value.releaseDate,
+        duration: editedMovieDuration.value ? editedMovieDuration.value : selectedMovie.value.duration,
       };
 
       await axios.patch(apiUrl + `/movies/${selectedMovie.value.id}`, updatedMovie, {headers});
 
-      editedMovieTitle.value = '';
+      editedMovie.value = '';
       getMovie();
       selectedMovieId.value = null;
     } catch (error) {
@@ -115,6 +114,7 @@ const deleteMovie = async (movie) => {
 
 <template>
   <div>
+    <a href="/movies">Back to movies</a>
     <div v-if="movie">
       <a @click="toggleDetails(movie)">Edit</a>
       <h2>{{ movie.title }}</h2>
@@ -170,11 +170,10 @@ const deleteMovie = async (movie) => {
             v-model="editedMovieDuration"
         />
       </div>
-      <button type="submit" class="btn btn-primary">Modifier</button>
+      <button type="submit" class="btn btn-primary">Update</button>
     </form>
   </div>
   <div>
     <a @click="deleteMovie(movie)">Delete</a>
   </div>
 </template>
-
