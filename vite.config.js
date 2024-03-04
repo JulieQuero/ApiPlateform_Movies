@@ -13,7 +13,4 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-  build: {
-    base: '//home/mmi21a13/public_html/ApiPlateform_Movies/dist/',
-  },
 })
