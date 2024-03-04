@@ -113,10 +113,9 @@ const deleteMovie = async (movie) => {
 </script>
 
 <template>
-  <div>
-    <a href="/movies">Back to movies</a>
+  <div class="cardView">
+    <a class="btn btn-secondary" href="/movies">Back to movies</a>
     <div v-if="movie">
-      <a @click="toggleDetails(movie)">Edit</a>
       <h2>{{ movie.title }}</h2>
       <p>Description : {{ movie.description }}</p>
       <p>Release Date : {{ movie.releaseDate }}</p>
@@ -128,52 +127,70 @@ const deleteMovie = async (movie) => {
       </ul>
     </div>
   </div>
-  <div :class="['col-md-3']">
-    <form @submit.prevent="updateMovie">
-      <div class="form-group">
-        <label for="editMovieTitle">Titre du film :</label>
-        <input
-            type="text"
-            class="form-control"
-            id="editMovieTitle"
-            v-if="selectedMovie"
-            v-model="editedMovieTitle"
-        />
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Update Actor</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form @submit.prevent="updateMovie">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="editMovieTitle">Titre du film :</label>
+              <input
+                  type="text"
+                  class="form-control"
+                  id="editMovieTitle"
+                  v-if="selectedMovie"
+                  v-model="editedMovieTitle"
+              />
+            </div>
+            <div class="form-group">
+              <label for="editedMovieDescription">Description :</label>
+              <input
+                  type="text"
+                  class="form-control"
+                  id="editMovieTitle"
+                  v-if="selectedMovie"
+                  v-model="editedMovieDescription"
+              />
+            </div>
+            <div class="form-group">
+              <label for="editMovieReleaseDate">Date de sortie :</label>
+              <input
+                  type="text"
+                  class="form-control"
+                  id="editMovieReleaseDate"
+                  v-if="selectedMovie"
+                  v-model="editedMovieReleaseDate"
+              />
+            </div>
+            <div class="form-group">
+              <label for="editMovieDuration">Durée :</label>
+              <input
+                  type="text"
+                  class="form-control"
+                  id="editMovieDuration"
+                  v-if="selectedMovie"
+                  v-model="editedMovieDuration"
+              />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+          </div>
+        </form>
       </div>
-      <div class="form-group">
-        <label for="editedMovieDescription">Description :</label>
-        <input
-            type="text"
-            class="form-control"
-            id="editMovieTitle"
-            v-if="selectedMovie"
-            v-model="editedMovieDescription"
-        />
-      </div>
-      <div class="form-group">
-        <label for="editMovieReleaseDate">Date de sortie :</label>
-        <input
-            type="text"
-            class="form-control"
-            id="editMovieReleaseDate"
-            v-if="selectedMovie"
-            v-model="editedMovieReleaseDate"
-        />
-      </div>
-      <div class="form-group">
-        <label for="editMovieDuration">Durée :</label>
-        <input
-            type="text"
-            class="form-control"
-            id="editMovieDuration"
-            v-if="selectedMovie"
-            v-model="editedMovieDuration"
-        />
-      </div>
-      <button type="submit" class="btn btn-primary">Update</button>
-    </form>
+    </div>
   </div>
-  <div>
-    <a @click="deleteMovie(movie)">Delete</a>
+  <div class="buttons">
+    <button @click="toggleDetails(movie)" type="button" class="right btn btn-primary" data-bs-toggle="modal"
+            data-bs-target="#exampleModal">
+      Edit
+    </button>
+    <a class="btn btn-danger" @click="deleteMovie(movie)">Delete</a>
   </div>
 </template>
