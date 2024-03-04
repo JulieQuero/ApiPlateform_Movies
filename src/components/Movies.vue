@@ -34,7 +34,6 @@ defineProps({
     <div class="movie card">
       <routerLink :to="'/movie-detail/'+id">
       <h2>{{ title }}</h2>
-      <p>Id : {{ id }}</p>
       <p>Description : {{ description }}</p>
       <p>Release Date : {{ releaseDate }}</p>
       <p>Duration : {{ duration }}</p>
@@ -50,12 +49,14 @@ defineProps({
 </template>
 
 <style scoped>
-.card {
-  width: 15%;
-  padding: 1rem;
+.movie {
+  width: 300px;
+  height: 500px;
   margin: 1rem;
-  border: 1px solid var(--color-border);
-  border-radius: 4px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.movie a {
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
 }
 </style>
