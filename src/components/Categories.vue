@@ -1,5 +1,8 @@
 <script setup>
 defineProps({
+  id: {
+    type: Number,
+  },
   category: {
     type: String,
     default: 'Category'
@@ -14,12 +17,15 @@ defineProps({
 
 <template>
   <div class="category card">
+    <button>Edit</button>
+    <routerLink :to="'/category-detail/'+id">
     <h2>{{ category }}</h2>
     <ul>
       <li v-for="movie in movies" :key="movie.id">
         {{ movie.title }}
       </li>
     </ul>
+    </routerLink>
   </div>
 </template>
 

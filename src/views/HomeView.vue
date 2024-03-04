@@ -9,14 +9,35 @@ let responseActors = ref('')
 let movies = ref('')
 let actors = ref('')
 
-onMounted(async () => {
-  const responseMovies = await axios.get('http://localhost:8080/symfonyS5/public/index.php/api/movies?pagination=false');
-  movies.value = responseMovies.data['hydra:member'].reverse();
-  movies.value = movies.value.slice(0,4);
+const token = localStorage.getItem('user-token');
+if (token) {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
 
-  const responseActors = await axios.get('http://localhost:8080/symfonyS5/public/index.php/api/actors?pagination=false');
-  actors.value = responseActors.data['hydra:member'].reverse();
-  actors.value = actors.value.slice(0,4)
+
+onMounted(async () => {
+  const responseMovies = await axios.get(
+      'http://localhost:8080/symfonyS5/public/index.php/api/movies?online=true&page=1',
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      }
+  )
+  movies.value = responseMovies.data.reverse();
+  movies.value = movies.value.slice(0,4);
+  const responseActors = await axios.get(
+      'http://localhost:8080/symfonyS5/public/index.php/api/actors?online=true&page=1',
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      }
+  )
+  actors.value = responseActors.data.reverse();
+  actors.value = actors.value.slice(0,4);
 });
 
 </script>
@@ -29,6 +50,7 @@ onMounted(async () => {
       <div class="last-four">
         <Movies v-for="movie in movies"
                 :key="movie.id"
+                :id="movie.id"
                 :title="movie.title"
                 :description="movie.description"
                 :releaseDate="movie.releaseDate"
@@ -43,6 +65,7 @@ onMounted(async () => {
       <div class="last-four">
         <Actors v-for="actor in actors"
                 :key="actor.id"
+                :id="actor.id"
                 :firstName="actor.firstName"
                 :lastName="actor.lastName"
                 :nationality="actor.nationality.nationality"

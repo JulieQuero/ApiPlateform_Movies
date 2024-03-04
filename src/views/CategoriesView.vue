@@ -3,6 +3,11 @@ import { onMounted, ref } from 'vue'
 import axios from 'axios'
 import Categories from "@/components/Categories.vue";
 
+const token = localStorage.getItem('user-token');
+if (token) {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
+
 let response = ref('')
 let categories = ref('')
 let ListComplete = ref('')
@@ -29,6 +34,7 @@ function filter(){
       <div class="list">
           <Categories v-for="category in categories"
                       :key="category.id"
+                      :id="category.id"
                       :category="category.name"
                       :movies="category.movies"
           />
