@@ -14,6 +14,6 @@ export default defineConfig({
     }
   },
   build: {
-    base: '/apimovies/',
+    base: '//home/mmi21a13/public_html/ApiPlateform_Movies/dist/',
   },
 })
