@@ -7,14 +7,42 @@ const token = localStorage.getItem('user-token');
 if (token) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }
+const apiUrl = import.meta.env.VITE_API_URL;
 
 let response = ref('')
 let categories = ref('')
 let ListComplete = ref('')
-onMounted(async () => {
-  const response = await axios.get('http://localhost:8080/symfonyS5/public/index.php/api/categories');
-  categories.value = response.data['hydra:member'];
-  ListComplete.value = response.data['hydra:member'];
+
+const getCategories = async () => {
+  try {
+    const token = localStorage.getItem('user-token');
+    if (!token) {
+      // Rediriger l'utilisateur vers la page de connexion
+      router.push('/login');
+      return;
+    }
+    const response = await axios.get(apiUrl +'/categories', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+      },
+    });
+    categories.value = response.data;
+    ListComplete.value = response.data;
+  } catch (error) {
+    console.error('Error', error);
+    console.log(error.response?.data?.code);
+    if (error.response?.data?.code === 401) {
+      // Détruire le token
+      localStorage.removeItem('token');
+      // Rediriger l'utilisateur vers la page de connexion
+      router.push('/login');
+    }
+  }
+};
+
+onMounted(() => {
+  getCategories();
 });
 
 var recherche = ref('')

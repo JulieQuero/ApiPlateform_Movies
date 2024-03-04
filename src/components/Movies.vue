@@ -26,13 +26,12 @@ defineProps({
   actors: {
     type: Array,
     default: () => []
-  },
+  }
 })
 </script>
 
 <template>
     <div class="movie card">
-      <button>Edit</button>
       <routerLink :to="'/movie-detail/'+id">
       <h2>{{ title }}</h2>
       <p>Id : {{ id }}</p>

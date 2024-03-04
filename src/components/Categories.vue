@@ -17,7 +17,6 @@ defineProps({
 
 <template>
   <div class="category card">
-    <button>Edit</button>
     <routerLink :to="'/category-detail/'+id">
     <h2>{{ category }}</h2>
     <ul>
