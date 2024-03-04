@@ -10,6 +10,7 @@ if (token) {
 
 const route = useRoute()
 const router = useRouter();
+
 const id = route.params.id
 const apiUrl = import.meta.env.VITE_API_URL;
 const selectedMovieId = ref(null);

@@ -1,7 +1,7 @@
 <script setup>
 import {onMounted, ref} from "vue";
 import axios from "axios";
-import {useRoute} from "vue-router"
+import {useRoute, useRouter} from "vue-router"
 
 const token = localStorage.getItem('user-token');
 if (token) {
@@ -9,6 +9,8 @@ if (token) {
 }
 
 const route = useRoute()
+const router = useRouter();
+
 const id = route.params.id
 const apiUrl = import.meta.env.VITE_API_URL;
 const selectedCategoryId = ref(null);
