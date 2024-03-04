@@ -36,7 +36,7 @@ const router = createRouter({
   ]
 })
 
-/*router.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next) => {
   const PUBLIC_PAGES = ['login'];
   const loggedIn = localStorage.getItem('user-token');
 
@@ -45,6 +45,6 @@ const router = createRouter({
   }
 
   next();
-});*/
+});
 
 export default router
