@@ -8,7 +8,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 const login = async () => {
   try {
-    const response = await axios.post(apiUrl +'/login_check', {
+    const response = await axios.post(apiUrl + '/login_check', {
       username: username.value,
       password: password.value
     });
@@ -26,10 +26,22 @@ const login = async () => {
 <template>
   <section>
     <h2>Login</h2>
-    <form @submit.prevent="login">
-      <input v-model="username" placeholder="Username" required/>
-      <input v-model="password" type="password" placeholder="Password" required/>
-      <button type="submit">Login</button>
+    <form class="login" @submit.prevent="login">
+      <div class="form-group">
+        <label>Username :</label>
+        <input class="form-control" v-model="username" placeholder="Username" required/>
+      </div>
+      <div class="form-group">
+        <label>Password :</label>
+        <input class="form-control" v-model="password" type="password" placeholder="Password" required/>
+      </div>
+      <button class="btn btn-primary" type="submit">Login</button>
     </form>
   </section>
 </template>
+
+<style scoped>
+ label{
+   margin: 10px 0;
+ }
+</style>
