@@ -1,7 +1,7 @@
 <script setup>
 import {onMounted, ref} from "vue";
 import axios from "axios";
-import {useRoute} from "vue-router"
+import {useRoute, useRouter} from "vue-router"
 
 const token = localStorage.getItem('user-token');
 if (token) {
@@ -9,6 +9,8 @@ if (token) {
 }
 
 const route = useRoute()
+const router = useRouter();
+
 const id = route.params.id
 const apiUrl = import.meta.env.VITE_API_URL;
 const selectedCategoryId = ref(null);
@@ -112,10 +114,9 @@ const deleteCategory = async (category) => {
 </script>
 
 <template>
-  <div>
-    <a href="/categories">Back to categories</a>
+  <div class="cardView">
+    <a class="btn btn-secondary" href="/categories">Back to categories</a>
     <div v-if="category">
-      <a @click="toggleDetails(category)">Edit</a>
       <h2>{{category.name}}</h2>
       <p>Movies :</p>
       <ul>
@@ -123,16 +124,32 @@ const deleteCategory = async (category) => {
       </ul>
     </div>
   </div>
-  <div :class="['col-md-3']">
-    <form @submit.prevent="updateCategory">
-      <div class="form-group">
-        <label for="name">Name : </label>
-        <input type="text" id="name" v-model="editedCategoryName">
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Update Category</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form @submit.prevent="updateCategory">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="name">Name : </label>
+              <input class="input-group-text" type="text" id="name" v-model="editedCategoryName">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+          </div>
+        </form>
       </div>
-      <button type="submit" class="btn btn-primary">Update</button>
-    </form>
+    </div>
   </div>
-  <div>
-    <a @click="deleteCategory(category)">Delete</a>
+  <div class="buttons">
+    <button @click="toggleDetails(category)" type="button" class="right btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Edit
+    </button>
+    <a class="btn btn-danger" @click="deleteCategory(category)">Delete</a>
   </div>
 </template>

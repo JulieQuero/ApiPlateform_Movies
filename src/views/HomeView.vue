@@ -3,6 +3,9 @@ import { onMounted, ref } from 'vue'
 import axios from 'axios'
 import Actors from "@/components/Actors.vue";
 import Movies from "@/components/Movies.vue";
+import {useRouter} from "vue-router";
+
+const router = useRouter();
 
 let responseMovies = ref('')
 let responseActors = ref('')
@@ -16,30 +19,65 @@ if (token) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }
 
+const getMovies = async () => {
+  try {
+    const token = localStorage.getItem('user-token');
+    if (!token) {
+      // Rediriger l'utilisateur vers la page de connexion
+      router.push('/login');
+      return;
+    }
+    const responseMovies = await axios.get(apiUrl + '/movies', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+      },
+    });
+    movies.value = responseMovies.data.reverse();
+    movies.value = movies.value.slice(0,4);
+  } catch (error) {
+    console.error('Error', error);
+    console.log(error.response?.data?.code);
+    if (error.response?.data?.code === 401) {
+      // Détruire le token
+      localStorage.removeItem('token');
+      // Rediriger l'utilisateur vers la page de connexion
+      router.push('/login');
+    }
+  }
+};
 
-onMounted(async () => {
-  const responseMovies = await axios.get(
-      apiUrl +'/movies?online=true&page=1',
-      {
-        headers: {
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
-      }
-  )
-  movies.value = responseMovies.data.reverse();
-  movies.value = movies.value.slice(0,4);
-  const responseActors = await axios.get(
-      apiUrl +'/actors?online=true&page=1',
-      {
-        headers: {
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
-      }
-  )
-  actors.value = responseActors.data.reverse();
-  actors.value = actors.value.slice(0,4);
+const getActors = async () => {
+  try {
+    const token = localStorage.getItem('user-token');
+    if (!token) {
+      // Rediriger l'utilisateur vers la page de connexion
+      router.push('/login');
+      return;
+    }
+    const responseActors = await axios.get(apiUrl +'/actors', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+      },
+    });
+    actors.value = responseActors.data.reverse();
+    actors.value = actors.value.slice(0,4);
+  } catch (error) {
+    console.error('Error', error);
+    console.log(error.response?.data?.code);
+    if (error.response?.data?.code === 401) {
+      // Détruire le token
+      localStorage.removeItem('token');
+      // Rediriger l'utilisateur vers la page de connexion
+      router.push('/login');
+    }
+  }
+};
+
+onMounted(() => {
+  getMovies();
+  getActors();
 });
 
 </script>
@@ -84,13 +122,14 @@ onMounted(async () => {
   align-items: center;
   justify-content: space-around;
 }
-
-.card {
-  width: 30%;
-  padding: 1rem;
+/*.movie {
+  width: 300px;
+  height: 500px;
   margin: 1rem;
-  border: 1px solid var(--color-border);
-  border-radius: 4px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+.movie a {
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+}*/
 </style>

@@ -1,7 +1,7 @@
 <script setup>
 import {onMounted, ref} from "vue";
 import axios from "axios";
-import {useRoute} from "vue-router"
+import {useRoute, useRouter} from "vue-router"
 
 const token = localStorage.getItem('user-token');
 if (token) {
@@ -9,6 +9,8 @@ if (token) {
 }
 
 const route = useRoute()
+const router = useRouter();
+
 const id = route.params.id
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -79,8 +81,6 @@ const updateActor = async () => {
         lastName: editedActorLastName.value ? editedActorLastName.value : selectedActor.value.lastName,
       };
 
-      console.log(updateActor);
-
       await axios.patch(apiUrl + `/actors/${selectedActor.value.id}`, updateActor, {headers});
 
       selectedActor.value = '';
@@ -95,34 +95,49 @@ const updateActor = async () => {
 </script>
 
 <template>
-  <div>
-    <a href="/actors">Back to actors</a>
+  <div class="cardView">
+    <a class="btn btn-secondary" href="/actors">Back to actors</a>
     <div v-if="actor">
-      <a @click="toggleDetails(actor)">Edit</a>
       <h2>{{ actor.firstName }} {{ actor.lastName }}</h2>
       <p>Nationality : {{ actor.nationality.nationality }}</p>
-      <p>Birth Date : <!--{{actor.birthDate}}--></p> <!-- TODO : fix date -->
       <p>Movies :</p>
       <ul>
         <li v-for="movie in actor.movies">{{ movie.title }}</li>
       </ul>
     </div>
-    <div :class="['col-md-3']">
-      <form @submit.prevent="updateActor">
-        <div class="form-group">
-          <label for="firstName">First Name : </label>
-          <input type="text" id="firstName" v-model="editedActorFirstName">
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Update Actor</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form @submit.prevent="updateActor">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="firstName">First Name : </label>
+                <input class="input-group-text" type="text" id="firstName" v-model="editedActorFirstName">
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last Name : </label>
+                <input class="input-group-text" type="text" id="lastName" v-model="editedActorLastName">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+            </div>
+          </form>
         </div>
-        <div class="form-group">
-          <label for="lastName">Last Name : </label>
-          <input type="text" id="lastName" v-model="editedActorLastName">
-        </div>
-        <button type="submit" class="btn btn-primary">Update</button>
-      </form>
+      </div>
     </div>
   </div>
-  <div>
-    <a @click="deleteActor(actor)">Delete</a>
+  <div class="buttons">
+    <button @click="toggleDetails(actor)" type="button" class="right btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Edit
+    </button>
+    <a class="btn btn-danger" @click="deleteActor(actor)">Delete</a>
   </div>
 </template>
 

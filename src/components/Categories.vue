@@ -29,12 +29,14 @@ defineProps({
 </template>
 
 <style scoped>
-.card {
-  width: 15%;
-  padding: 1rem;
+.category {
+  width: 300px;
+  height: 500px;
   margin: 1rem;
-  border: 1px solid var(--color-border);
-  border-radius: 4px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.category a {
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
 }
 </style>

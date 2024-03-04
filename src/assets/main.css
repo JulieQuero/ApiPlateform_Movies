@@ -1,4 +1,5 @@
 @import './base.css';
+@import 'node_modules/bootstrap/dist/css/bootstrap.css';
 
 #app {
   margin: 0 auto;
@@ -7,8 +8,22 @@
   font-weight: normal;
 }
 
+body {
+  background-color: #282828;
+  color: hsla(160, 100%, 37%, 1);
+}
+
+.card, .modal-content {
+  background-color: #323232;
+}
+
+.modal-content {
+  --bs-modal-header-border-color: #323232;
+  --bs-modal-footer-border-color: #323232;
+}
+
 a,
-.green {
+h1, h2, .green {
   text-decoration: none;
   color: hsla(160, 100%, 37%, 1);
   transition: 0.4s;
@@ -29,4 +44,19 @@ a,
   #app {
     padding: 0 2rem;
   }
+}
+
+.cardView {
+  margin: 0 10%;
+}
+
+.btn{
+  margin: 20px;
+}
+
+.buttons {
+  width: 10%;
+  margin-left: 100px;
+  display: flex;
+  justify-content: space-between;
 }
