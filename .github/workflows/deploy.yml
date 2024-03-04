@@ -20,7 +20,7 @@ jobs:
           PORT: ${{ secrets.PORT }}
           KEY: ${{ secrets.SSHKEY }}
           script: |
-            cd /var/www/
+            cd /var/www/vuejs
             git clone git@github.com:JulieQuero/ApiPlateform_Movies.git
             cd ApiPlateform_Movies
             git pull
