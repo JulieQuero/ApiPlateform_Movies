@@ -7,15 +7,14 @@ const token = localStorage.getItem('user-token');
 if (token) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }
-
-let url = 'http://localhost:8080/symfonyS5/public/index.php';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 let response = ref('')
 let movies = ref('')
 let ListComplete = ref('')
 onMounted(async () => {
   const response = await axios.get(
-      'http://localhost:8080/symfonyS5/public/index.php/api/movies?online=true&page=1',
+      apiUrl+'/movies?online=true&page=1',
       {
         headers: {
           'Authorization': `Bearer ${token}`

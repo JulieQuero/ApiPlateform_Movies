@@ -3,13 +3,14 @@ import { onMounted, ref } from 'vue'
 import axios from 'axios'
 import Actors from "@/components/Actors.vue";
 
+const apiUrl = import.meta.env.VITE_API_URL;
 
 let response = ref('')
 let actors = ref('')
 let ListComplete = ref('')
 let data = ref('')
 onMounted(async () => {
-  const response = await axios.get('http://localhost:8080/symfonyS5/public/index.php/api/actors');
+  const response = await axios.get(apiUrl +'/actors');
   actors.value = response.data['hydra:member'];
   ListComplete.value = response.data['hydra:member'];
 });

@@ -7,12 +7,13 @@ const token = localStorage.getItem('user-token');
 if (token) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }
+const apiUrl = import.meta.env.VITE_API_URL;
 
 let response = ref('')
 let categories = ref('')
 let ListComplete = ref('')
 onMounted(async () => {
-  const response = await axios.get('http://localhost:8080/symfonyS5/public/index.php/api/categories');
+  const response = await axios.get(apiUrl +'/categories');
   categories.value = response.data['hydra:member'];
   ListComplete.value = response.data['hydra:member'];
 });

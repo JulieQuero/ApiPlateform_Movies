@@ -10,12 +10,13 @@ if (token) {
 
 const route = useRoute()
 const id = route.params.id
+const apiUrl = import.meta.env.VITE_API_URL;
 
 let category = ref('')
 
 onMounted(async () => {
   const responseCategories = await axios.get(
-      'http://localhost:8080/symfonyS5/public/index.php/api/categories/'+ id,
+      apiUrl +'/categories/'+ id,
       {
         headers: {
           'Accept': 'application/json',

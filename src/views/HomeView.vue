@@ -9,6 +9,8 @@ let responseActors = ref('')
 let movies = ref('')
 let actors = ref('')
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const token = localStorage.getItem('user-token');
 if (token) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -17,7 +19,7 @@ if (token) {
 
 onMounted(async () => {
   const responseMovies = await axios.get(
-      'http://localhost:8080/symfonyS5/public/index.php/api/movies?online=true&page=1',
+      apiUrl +'/movies?online=true&page=1',
       {
         headers: {
           'Accept': 'application/json',
@@ -28,7 +30,7 @@ onMounted(async () => {
   movies.value = responseMovies.data.reverse();
   movies.value = movies.value.slice(0,4);
   const responseActors = await axios.get(
-      'http://localhost:8080/symfonyS5/public/index.php/api/actors?online=true&page=1',
+      apiUrl +'/actors?online=true&page=1',
       {
         headers: {
           'Accept': 'application/json',

@@ -10,12 +10,13 @@ if (token) {
 
 const route = useRoute()
 const id = route.params.id
+const apiUrl = import.meta.env.VITE_API_URL;
 
 let movie = ref('')
 
 onMounted(async () => {
   const responseMovies = await axios.get(
-      'http://localhost:8080/symfonyS5/public/index.php/api/movies/'+ id,
+      apiUrl +'/movies/'+ id,
       {
         headers: {
           'Accept': 'application/json',

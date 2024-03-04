@@ -4,10 +4,11 @@ import axios from 'axios';
 
 const username = ref('');
 const password = ref('');
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const login = async () => {
   try {
-    const response = await axios.post('http://localhost:8080/symfonyS5/public/index.php/api/login_check', {
+    const response = await axios.post(apiUrl +'/login_check', {
       username: username.value,
       password: password.value
     });
