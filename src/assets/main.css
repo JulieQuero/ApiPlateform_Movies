@@ -60,3 +60,18 @@ h1, h2, .green {
   display: flex;
   justify-content: space-between;
 }
+
+.login {
+  margin: auto;
+  width: 20%;
+}
+
+.form-group{
+  margin: 10px;
+}
+
+.search {
+  width: 10%;
+  margin-left: 80%;
+  margin-bottom: 1%;
+}

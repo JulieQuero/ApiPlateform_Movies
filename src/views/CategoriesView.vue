@@ -55,8 +55,8 @@ function filter(){
 <template>
   <h1>CategoriesPage</h1>
   <div class="wrapper">
-    <div class="search>">
-      <input v-model.trim="recherche" placeholder="Search category" @keyup="filter">
+    <div class="search d-flex">
+      <input class="form-control me-2" v-model.trim="recherche" placeholder="Search category" @keyup="filter">
     </div>
     <div class="categories">
       <div class="list">
